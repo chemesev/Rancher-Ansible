@@ -1,10 +1,10 @@
-[Rancher]
-8-a.lab.int
+[rancher]
+rancher ansible_host=8-a.lab.int
 
 [nodes:children]
 application
 database
-Rancher
+rancher
 
 [application]
 8-b.lab.int
