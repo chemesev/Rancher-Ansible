@@ -1,24 +1,19 @@
 ---
-- name: Fail if OS distro is not Ubuntu 14.04
-  fail: 
-      msg="The role is designed only for Ubuntu 14.04"
-  when: "{{ ansible_distribution_version | version_compare('14.04', '!=') }}" 
-
 - name: Install dependencies
-  apt: 
-      name={{ item }} 
+  apt:
+      name={{ item }}
       update_cache=yes
-  with_items: 
+  with_items:
       - python-dev
       - python-setuptools
 
 - name: Install pip
-  easy_install: 
-      name=pip 
+  easy_install:
+      name=pip
 
 - name: Install docker-py
-  pip: 
-      name=docker-py 
+  pip:
+      name=docker-py
       state=present
       version=1.1.0
 
@@ -34,28 +29,28 @@
       id=2C52609D
 
 - name: Install Docker package
-  apt: 
+  apt:
       name=docker-engine
       update_cache=yes
 
 - name: Create a docker group
-  group: 
-      name=docker 
+  group:
+      name=docker
       state=present
 
 - name: Add user(s) to docker group
-  user: 
-      name={{ item }} 
-      group=docker 
+  user:
+      name={{ item }}
+      group=docker
       state=present
   with_items: docker_users
   when: docker_users is defined
 
-- name: Configure Docker 
-  template: 
-      src=default_docker.j2 
-      dest=/etc/default/docker 
-      mode=0644 
-      owner=root 
+- name: Configure Docker
+  template:
+      src=default_docker.j2
+      dest=/etc/default/docker
+      mode=0644
+      owner=root
       group=root
   notify: restart docker
