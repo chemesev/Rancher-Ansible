@@ -7,7 +7,7 @@ database
 rancher
 
 [application]
-8-b.lab.int
+node1 ansible_host=8-b.lab.int
 
 [database]
-8-c.lab.int
+node2 ansible_host=8-b.lab.int
